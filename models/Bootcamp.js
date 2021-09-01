@@ -5,38 +5,49 @@ const geocoder = require('../utils/geocoder');
 const BootcampSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please add a name'],
+    // required: [true, 'Please add a name'],
+    required: [true, 'Por favor agregue un nombre'],
     unique: true,
     trim: true,
-    maxlength: [50, 'Name can not be more than 50 characters']
+    // maxlength: [50, 'Name can not be more than 50 characters']
+    maxlength: [50, 'El nombre no puede tener mas de 50 caracteres']
   },
   slug: String,
   description: {
     type: String,
-    required: [true, 'Please add a description'],
-    maxlength: [500, 'Description can not be more than 500 characters']
+    // required: [true, 'Please add a description'],
+    // maxlength: [500, 'Description can not be more than 500 characters']
+    required: [true, 'Por favor agregue una decripcion'],
+    maxlength: [500, 'La descripcion no puede tener mas de 500 caracteres']
   },
   website: {
     type: String,
+    // match: [
+    //   /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
+    //   'Please use a valid URL with HTTP or HTTPS'
+    // ]
     match: [
       /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
-      'Please use a valid URL with HTTP or HTTPS'
+      'Por favor ingrese una URL valida con HTTP o HTTPS'
     ]
   },
   phone: {
     type: String,
-    maxlength: [20, 'Phone number can not be longer than 20 characters']
+    // maxlength: [20, 'Phone number can not be longer than 20 characters']
+    maxlength: [20, 'El telefono no puede tener mas de 20 caracteres']
   },
   email: {
     type: String,
-    match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please add a valid email'
-    ]
+    // match: [
+    //   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+    //   'Please add a valid email'
+    // ]
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'Por favor ingrese un email valido']
   },
   address: {
     type: String,
-    required: [true, 'Please add an address']
+    // required: [true, 'Please add an address']
+    required: [true, 'Por favor ingrese una direccion valida']
   },
   location: {
     // GeoJSON Point
@@ -113,7 +124,7 @@ BootcampSchema.pre('remove', async function(next) {
 });
 
 // Reverse populate with virtuals, in order to get related courses of a Bootcamp
-BootcampSchema.virtual('courses', {
+BootcampSchema.virtual('courses' /* Field name */, {
   ref: 'Course',
   localField: '_id',
   foreignField: 'bootcamp', //Same name declared as a field in Course Model

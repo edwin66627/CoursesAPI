@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // Mount routers
 app.use('/api/bootcamps', bootcamps);
-app.use('/api/v1/courses', courses);
+app.use('/api/courses', courses);
 
 //Error Middleware
 app.use(errorHandler);
