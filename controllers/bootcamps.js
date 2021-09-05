@@ -28,18 +28,18 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 // @desc      Create new bootcamp
 // @route     POST /api/v1/bootcamps
 // @access    Private
-exports.createBootcamp = async (req, res, next) => {
-  try {
-    const bootcamp = await Bootcamp.create(req.body);
+exports.createBootcamp =  asyncHandler(async (req, res, next) => {
+  // Add user to req,body
+  req.body.user = req.user.id;
 
-    res.status(201).json({
-      success: true,
-      data: bootcamp
-    });
-  } catch (err) {
-    res.status(400).json({ success: false });
-  }
-};
+  const bootcamp = await Bootcamp.create(req.body);
+
+  res.status(201).json({
+    success: true,
+    data: bootcamp
+  });
+
+});
 
 // @desc      Update bootcamp
 // @route     PUT /api/v1/bootcamps/:id
